@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
+import pages.ProductDetailsPage;
 
 public class MainPageProductsTest extends BaseTest{
 
@@ -24,7 +25,6 @@ public class MainPageProductsTest extends BaseTest{
     @Test
     public void productListDisplayedOnMainPage(){
         boolean isDisplayed = new HomePage(driver)
-                .open()
                 .productList
                 .mainProductsDiv
                 .isDisplayed();
@@ -37,13 +37,12 @@ public class MainPageProductsTest extends BaseTest{
     @Test
     public void clickFirstProductOnListFirstSizeHighlited(){
         boolean isHighlighted = new HomePage(driver)
-                .open()
                 .firstProductFirstSizeClick()
                 .sizeIdIsActive(0);
 
         // after picking first product by clicking first size,
         // first available size should be highlighted on product page after redirection
-        logHtml.toPass(isHighlighted,"First product click first size, highlighted correct size", driver);
+        logHtml.toPass(isHighlighted,"Highlighted correct size", driver);
         Assert.assertTrue(isHighlighted);
     }
 
@@ -51,7 +50,6 @@ public class MainPageProductsTest extends BaseTest{
     public void productListLenght(){
 
         int numberOfProductsListed = new HomePage(driver)
-                .open()
                 .productList
                 .numberOfProductsListed();
 
@@ -64,7 +62,6 @@ public class MainPageProductsTest extends BaseTest{
     @Test
     public void allProductsHavePhoto(){
         HomePage page = new HomePage(driver);
-        page.open();
 
         int numberOfProductsListed = page.productList.numberOfProductsListed();
         int numberOfPhotos = page.productList.numberOfProductsWithImageListed();
@@ -78,7 +75,6 @@ public class MainPageProductsTest extends BaseTest{
     @Test
     public void allProductsHaveName(){
         HomePage page = new HomePage(driver);
-        page.open();
 
         int numberOfProductsListed = page.productList.numberOfProductsListed();
         int numberOfNames = page.productList.numberOfProductNamesListed();
@@ -92,7 +88,6 @@ public class MainPageProductsTest extends BaseTest{
     @Test
     public void allProductsHaveAddToBasketButton(){
         HomePage page = new HomePage(driver);
-        page.open();
 
         int numberOfProductsListed = page.productList.numberOfProductsListed();
         int numberOfAddToBasketButtons = page.productList.numberOfAddToBasketButtons();
@@ -106,7 +101,6 @@ public class MainPageProductsTest extends BaseTest{
     @Test
     public void allProductsHaveSizes(){
         HomePage page = new HomePage(driver);
-        page.open();
 
         int numberOfProductsListed = page.productList.numberOfProductsListed();
         int numberOfPickSize = page.productList.numberOfProductsWithSizeListed();
@@ -117,4 +111,19 @@ public class MainPageProductsTest extends BaseTest{
         Assert.assertTrue(allHaveSize);
     }
 
+    @Test
+    public void addToBasketToCorrectDetailsPage(){
+        String productName = "Rampers niemowlęcy na zamek, rakiety";
+
+        ProductDetailsPage page = new HomePage(driver).addProductToBasket(productName);
+        int numberOfH1 = page.h1HeadersNumber();
+        String actualProductName = page.h1Text();
+
+        //Product name should be used as H1 in details page, there should be only one H1
+        boolean correctRedirection = productName.equals(actualProductName);
+        Assert.assertTrue(numberOfH1 == 1);
+        logHtml.toPass(correctRedirection,"Proper details page", driver);
+        Assert.assertTrue(correctRedirection);
+    }
+    
 }

@@ -18,19 +18,25 @@ public class HomePage extends BasicPage {
         this.driver = driver;
         productList = new ProductList(driver);
         PageFactory.initElements(driver, this);
+        open();
     }
 
-    public HomePage open(){
+    private void open(){
         driver.get(url);
         WebElement closePopup = driver.findElement(By.xpath("//span[@class='close fa fa-times']"));
         if(closePopup.isDisplayed()) {
             closePopup.click();
         }
-        return this;
     }
 
     public ProductDetailsPage firstProductFirstSizeClick(){
         productList.addProductToBasketBySize(0,0);
+
+        return new ProductDetailsPage(driver);
+    }
+
+    public ProductDetailsPage addProductToBasket(String productName) {
+        productList.addProductToBasket(productName);
 
         return new ProductDetailsPage(driver);
     }

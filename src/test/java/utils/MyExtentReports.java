@@ -19,6 +19,7 @@ public class MyExtentReports {
 
     private static ExtentSparkReporter reporter;
     private static ExtentReports reports;
+    private int fileNumber = 0;
 
     public MyExtentReports(){
         reporter = new ExtentSparkReporter("index.html");
@@ -36,8 +37,9 @@ public class MyExtentReports {
     public void toPass(boolean status, String message, WebDriver driver){
         ExtentTest test = reports.createTest(message);
         String fileName = message.toLowerCase(Locale.ROOT)
+                .trim()
                 .replace(".","")
-                .replace(" ", "_");
+                .replace(",", "");
 
         if(status){
             test.log(Status.PASS, "test pass",takeScreenShot(fileName,driver));
@@ -46,7 +48,7 @@ public class MyExtentReports {
     }
 
     public void toFail(boolean state, String message, WebDriver driver){
-        toPass(!state,message, driver);
+        toPass(!state, message, driver);
     }
 
     public void flush(){
