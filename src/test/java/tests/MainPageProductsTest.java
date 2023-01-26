@@ -3,9 +3,11 @@ package tests;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.ProductDetailsPage;
+import utils.DataStorage;
 
 public class MainPageProductsTest extends BaseTest{
 
@@ -111,9 +113,8 @@ public class MainPageProductsTest extends BaseTest{
         Assert.assertTrue(allHaveSize);
     }
 
-    @Test
-    public void addToBasketToCorrectDetailsPage(){
-        String productName = "Rampers niemowlęcy na zamek, rakiety";
+    @Test (dataProvider = "productNames")
+    public void addToBasketToCorrectDetailsPage(String productName){
 
         ProductDetailsPage page = new HomePage(driver).addProductToBasket(productName);
         int numberOfH1 = page.h1HeadersNumber();
@@ -121,9 +122,19 @@ public class MainPageProductsTest extends BaseTest{
 
         //Product name should be used as H1 in details page, there should be only one H1
         boolean correctRedirection = productName.equals(actualProductName);
-        Assert.assertTrue(numberOfH1 == 1);
-        logHtml.toPass(correctRedirection,"Proper details page", driver);
+        Assert.assertEquals(numberOfH1, 1);
         Assert.assertTrue(correctRedirection);
+        logHtml.toPass(correctRedirection,"Proper details page", driver);
     }
-    
+
+    @DataProvider (name = "productNames")
+    public Object[][] prodNames(){
+        //max is to save time if You happen to review this
+        return new DataStorage().homePageProductNames(3);
+    }
+
+    @Test
+    public void printnames(){
+
+    }
 }

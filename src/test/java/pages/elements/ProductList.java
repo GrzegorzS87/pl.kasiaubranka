@@ -54,6 +54,11 @@ public class ProductList {
         return listProductNames.size();
     }
 
+    public void printProdNames(){
+        for(WebElement e : listProductNames)
+            System.out.println(e.getText());
+    };
+
     public int numberOfAddToBasketButtons(){
         return listButtonsAddToBasket.size();
     }
