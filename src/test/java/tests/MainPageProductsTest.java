@@ -113,6 +113,20 @@ public class MainPageProductsTest extends BaseTest{
         Assert.assertTrue(allHaveSize);
     }
 
+    @DataProvider (name = "productNames")
+    public Object[][] prodNames(){
+        //passing max value to save time if You happen to review this code
+        //You could use ShopSettings.PRODUCTS_ON_HOME_PAGE to check all
+        return new DataStorage().homePageProductNames(ShopSettings.PRODUCTS_TO_TEST);
+    }
+
+    @Test (dataProvider = "productNames")
+    public void productsOnList(String productName){
+        boolean isOnList = new HomePage(driver).productList.productIsOnList(productName);
+        logHtml.toPass(isOnList, productName + " is listed", driver);
+        Assert.assertTrue(isOnList);
+    }
+
     @Test (dataProvider = "productNames")
     public void addToBasketToCorrectDetailsPage(String productName){
 
@@ -122,19 +136,22 @@ public class MainPageProductsTest extends BaseTest{
 
         //Product name should be used as H1 in details page, there should be only one H1
         boolean correctRedirection = productName.equals(actualProductName);
+        logHtml.toPass(correctRedirection,"Proper details page, h1 count: " + numberOfH1, driver);
         Assert.assertEquals(numberOfH1, 1);
         Assert.assertTrue(correctRedirection);
-        logHtml.toPass(correctRedirection,"Proper details page", driver);
-    }
-
-    @DataProvider (name = "productNames")
-    public Object[][] prodNames(){
-        //max is to save time if You happen to review this
-        return new DataStorage().homePageProductNames(3);
     }
 
     @Test
-    public void printnames(){
+    public void productHasImage(){
+        boolean allImagesDisplayed = new HomePage(driver)
+                .productList
+                .productImages()
+                .stream()
+                .filter(element -> element.getAttribute("naturalWidth").equals(0))
+                .toList() //list of broken img's
+                .size() == 0;
 
+        logHtml.toPass(allImagesDisplayed, "All listed products have images.", driver);
+        Assert.assertTrue(allImagesDisplayed);
     }
 }

@@ -5,7 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import pages.ProductDetailsPage;
+import tests.ShopSettings;
 
 import java.util.List;
 
@@ -54,11 +56,6 @@ public class ProductList {
         return listProductNames.size();
     }
 
-    public void printProdNames(){
-        for(WebElement e : listProductNames)
-            System.out.println(e.getText());
-    };
-
     public int numberOfAddToBasketButtons(){
         return listButtonsAddToBasket.size();
     }
@@ -98,5 +95,9 @@ public class ProductList {
                 .toList()
                 .size() > 0;
         return isOnList;
+    }
+
+    public List<WebElement> productImages(){
+        return listProductImages;
     }
 }
