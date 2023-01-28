@@ -5,11 +5,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import pages.elements.AddToBasketModal;
 import pages.elements.BasicPage;
 
 import java.util.List;
 
 public class ProductDetailsPage extends BasicPage {
+
+    private WebDriver driver;
 
     @FindBy(xpath = "//div[@class='sizes']/a")
     private List<WebElement> sizes;
@@ -17,8 +20,12 @@ public class ProductDetailsPage extends BasicPage {
     @FindBy(xpath = "//h1")
     private List<WebElement> h1Headers;
 
+    @FindBy(xpath = "//div[@class = 'button_wrap']/button")
+    private WebElement addToBasketButton;
+
     public ProductDetailsPage(WebDriver driver) {
         super(driver);
+        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
@@ -37,6 +44,18 @@ public class ProductDetailsPage extends BasicPage {
 
     public String h1Text(){
         return h1Headers.get(0).getText();
+    }
+
+    public ProductDetailsPage pickSize(int id){
+        if( id < 0 ) id = 0;
+        if( id > (sizes.size()-1) ) id = sizes.size()-1;
+        sizes.get(id).click();
+        return this;
+    }
+
+    public AddToBasketModal addToBasket(){
+        addToBasketButton.click();
+        return new AddToBasketModal(driver);
     }
 
 }

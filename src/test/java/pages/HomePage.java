@@ -18,15 +18,8 @@ public class HomePage extends BasicPage {
         this.driver = driver;
         productList = new ProductList(driver);
         PageFactory.initElements(driver, this);
-        open();
-    }
-
-    private void open(){
         driver.get(url);
-        WebElement closePopup = driver.findElement(By.xpath("//span[@class='close fa fa-times']"));
-        if(closePopup.isDisplayed()) {
-            closePopup.click();
-        }
+        closePopUp(driver);
     }
 
     public ProductDetailsPage firstProductFirstSizeClick(){

@@ -1,5 +1,6 @@
 package pages.elements;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -107,6 +108,13 @@ public class BasicPage {
 
     public BasicPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
+    }
+
+    public void closePopUp(WebDriver driver){
+        WebElement closePopup = driver.findElement(By.xpath("//span[@class='close fa fa-times']"));
+        if(closePopup.isDisplayed()) {
+            closePopup.click();
+        }
     }
 
 }
