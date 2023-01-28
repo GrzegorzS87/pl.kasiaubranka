@@ -39,7 +39,6 @@ public class DataStorage {
         int rowCount = sheet.getLastRowNum()+1;
         if( rowCount > max ) rowCount = max;
 
-        System.out.println(rowCount);
         Object[][] productNames = new Object[rowCount][1];
 
         for(int i=0; i<rowCount; i++){

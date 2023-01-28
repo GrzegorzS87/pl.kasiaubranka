@@ -136,7 +136,7 @@ public class MainPageProductsTest extends BaseTest{
 
         //Product name should be used as H1 in details page, there should be only one H1
         boolean correctRedirection = productName.equals(actualProductName);
-        logHtml.toPass(correctRedirection,"Proper details page, h1 count: " + numberOfH1, driver);
+        logHtml.toPass(correctRedirection,productName + " has proper details page, h1 count: " + numberOfH1, driver);
         Assert.assertEquals(numberOfH1, 1);
         Assert.assertTrue(correctRedirection);
     }
@@ -155,3 +155,4 @@ public class MainPageProductsTest extends BaseTest{
         Assert.assertTrue(allImagesDisplayed);
     }
 }
+
