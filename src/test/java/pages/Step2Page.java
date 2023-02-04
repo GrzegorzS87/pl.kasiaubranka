@@ -22,8 +22,8 @@ public class Step2Page extends BasicPage {
         PageFactory.initElements(driver,this);
     }
 
-    public Step3Page clickNoRegisterPurchase(){
+    public basketNoRegPage clickNoRegisterPurchase(){
         buttons.get(1).click();
-        return new Step3Page(driver);
+        return new basketNoRegPage(driver);
     }
 }

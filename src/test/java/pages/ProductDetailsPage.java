@@ -9,6 +9,7 @@ import pages.elements.AddToBasketModal;
 import pages.elements.BasicPage;
 
 import java.util.List;
+import java.util.Random;
 
 public class ProductDetailsPage extends BasicPage {
 
@@ -51,6 +52,10 @@ public class ProductDetailsPage extends BasicPage {
         if( id > (sizes.size()-1) ) id = sizes.size()-1;
         sizes.get(id).click();
         return this;
+    }
+
+    public ProductDetailsPage pickRandomSize(){
+        return pickSize( new Random().nextInt(sizes.size()));
     }
 
     public AddToBasketModal addToBasket(){

@@ -18,8 +18,12 @@ public class HomePage extends BasicPage {
         this.driver = driver;
         productList = new ProductList(driver);
         PageFactory.initElements(driver, this);
+    }
+
+    public HomePage open(){
         driver.get(url);
         closePopUp(driver);
+        return this;
     }
 
     public ProductDetailsPage firstProductFirstSizeClick(){

@@ -38,8 +38,7 @@ public class MyExtentReports {
         ExtentTest test = reports.createTest(message);
         String fileName = message.toLowerCase(Locale.ROOT)
                 .trim()
-                .replace(".","")
-                .replace(",", "");
+                .replaceAll("[^A-Za-z0-9]", "");
 
         if(status){
             test.log(Status.PASS, "test pass",takeScreenShot(fileName,driver));
