@@ -27,6 +27,7 @@ public class MainPageProductsTest extends BaseTest{
     @Test
     public void productListDisplayedOnMainPage(){
         boolean isDisplayed = new HomePage(driver)
+                .open()
                 .productList
                 .mainProductsDiv
                 .isDisplayed();
@@ -39,6 +40,7 @@ public class MainPageProductsTest extends BaseTest{
     @Test
     public void clickFirstProductOnListFirstSizeHighlited(){
         boolean isHighlighted = new HomePage(driver)
+                .open()
                 .firstProductFirstSizeClick()
                 .sizeIdIsActive(0);
 
@@ -52,6 +54,7 @@ public class MainPageProductsTest extends BaseTest{
     public void productListLenght(){
 
         int numberOfProductsListed = new HomePage(driver)
+                .open()
                 .productList
                 .numberOfProductsListed();
 
@@ -63,7 +66,8 @@ public class MainPageProductsTest extends BaseTest{
 
     @Test
     public void allProductsHavePhoto(){
-        HomePage page = new HomePage(driver);
+        HomePage page = new HomePage(driver)
+                .open();
 
         int numberOfProductsListed = page.productList.numberOfProductsListed();
         int numberOfPhotos = page.productList.numberOfProductsWithImageListed();
@@ -76,7 +80,8 @@ public class MainPageProductsTest extends BaseTest{
 
     @Test
     public void allProductsHaveName(){
-        HomePage page = new HomePage(driver);
+        HomePage page = new HomePage(driver)
+                .open();
 
         int numberOfProductsListed = page.productList.numberOfProductsListed();
         int numberOfNames = page.productList.numberOfProductNamesListed();
@@ -89,7 +94,8 @@ public class MainPageProductsTest extends BaseTest{
 
     @Test
     public void allProductsHaveAddToBasketButton(){
-        HomePage page = new HomePage(driver);
+        HomePage page = new HomePage(driver)
+                .open();
 
         int numberOfProductsListed = page.productList.numberOfProductsListed();
         int numberOfAddToBasketButtons = page.productList.numberOfAddToBasketButtons();
@@ -102,7 +108,8 @@ public class MainPageProductsTest extends BaseTest{
 
     @Test
     public void allProductsHaveSizes(){
-        HomePage page = new HomePage(driver);
+        HomePage page = new HomePage(driver)
+                .open();
 
         int numberOfProductsListed = page.productList.numberOfProductsListed();
         int numberOfPickSize = page.productList.numberOfProductsWithSizeListed();
@@ -122,7 +129,9 @@ public class MainPageProductsTest extends BaseTest{
 
     @Test (dataProvider = "productNames")
     public void productsOnList(String productName){
-        boolean isOnList = new HomePage(driver).productList.productIsOnList(productName);
+        boolean isOnList = new HomePage(driver)
+                .open()
+                .productList.productIsOnList(productName);
         logHtml.toPass(isOnList, productName + " is listed", driver);
         Assert.assertTrue(isOnList);
     }
@@ -130,7 +139,10 @@ public class MainPageProductsTest extends BaseTest{
     @Test (dataProvider = "productNames")
     public void addToBasketToCorrectDetailsPage(String productName){
 
-        ProductDetailsPage page = new HomePage(driver).addProductToBasket(productName);
+        ProductDetailsPage page = new HomePage(driver)
+                .open()
+                .addProductToBasket(productName);
+
         int numberOfH1 = page.h1HeadersNumber();
         String actualProductName = page.h1Text();
 
@@ -144,6 +156,7 @@ public class MainPageProductsTest extends BaseTest{
     @Test
     public void productHasImage(){
         boolean allImagesDisplayed = new HomePage(driver)
+                .open()
                 .productList
                 .productImages()
                 .stream()
